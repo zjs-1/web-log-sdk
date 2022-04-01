@@ -26,7 +26,7 @@ module.exports = {
         test: /\.js$/,
         use: ['eslint-loader'],
         include: path.resolve(__dirname, 'src'),
-        enforce: 'pre'
+        enforce: 'pre',
       },
       {
         test: /\.js$/,
@@ -34,11 +34,11 @@ module.exports = {
           loader: 'happypack/loader',
           options: {
             id: 'babel',
-          }
+          },
         }],
         include: path.resolve(__dirname, 'src'),
       },
-    ]
+    ],
   },
   plugins: [
     new HappyPack({
@@ -47,15 +47,15 @@ module.exports = {
         loader: 'babel-loader',
         options: {
           cacheDirectory: true,
-        }
+        },
       }],
     }),
     new DefinePlugin({
       'process.env': {
         NODE_ENV: JSON.stringify('production'),
       },
-      SDK_VERSION: JSON.stringify(process.env.npm_package_version)
+      SDK_VERSION: JSON.stringify(process.env.npm_package_version),
     }),
     new ModuleConcatenationPlugin(),
-  ]
+  ],
 };

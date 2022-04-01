@@ -1,14 +1,14 @@
 const getXPath = (elm) => {
   try {
-    const allNodes = document.getElementsByTagName('*');
     const segs = [];
 
     for (; elm && elm.nodeType === 1; elm = elm.parentNode) {
       if (elm.hasAttribute('id')) {
         let uniqueIdCount = 0;
 
+        const allNodes = document.querySelectorAll('[id]');
         for (let n = 0; n < allNodes.length; n++) {
-          if (allNodes[n].hasAttribute('id') && allNodes[n].id === elm.id)
+          if (allNodes[n].id === elm.id)
             uniqueIdCount++;
           if (uniqueIdCount > 1) break;
         }
@@ -26,18 +26,11 @@ const getXPath = (elm) => {
           if (sib.localName === elm.localName) i++;
         }
 
-        if (i === 1) {
-          if (elm.nextElementSibling) {
-            if (elm.nextElementSibling.localName !== elm.localName) {
-              segs.unshift(elm.localName.toLowerCase());
-            } else {
-              segs.unshift(elm.localName.toLowerCase() + '[' + i + ']');
-            }
-          } else {
-            segs.unshift(elm.localName.toLowerCase());
-          }
-        } else {
+        // 前面有其他同名元素 或 后面有其他同名元素
+        if (i > 1 || (elm.nextSibling && elm.nextSibling.localName === elm.localName)) {
           segs.unshift(elm.localName.toLowerCase() + '[' + i + ']');
+        } else {
+          segs.unshift(elm.localName.toLowerCase());
         }
       }
     }
