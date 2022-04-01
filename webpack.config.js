@@ -10,6 +10,7 @@ module.exports = {
   output: {
     filename: `web-log-sdk-${process.env.npm_package_version}.min.js`,
     path: path.resolve(__dirname, './lib'),
+    library: 'commonjs',
   },
   watchOptions: {
     ignored: /node_modules/,
